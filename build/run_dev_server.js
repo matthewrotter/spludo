@@ -29,7 +29,11 @@ dev_server = {
         sys.debug('DEVSERVER: Starting server');
         that.watchFiles();
 
-        this.process = child_process.spawn(process.argv[0], ['run_server.js']);
+        var args = process.argv.slice(2);
+        if (!args.length)
+          args.push('run_server.js');
+
+        this.process = child_process.spawn(process.argv[0], args);
 
         this.process.stdout.addListener('data', function (data) {
             process.stdout.write(data);
